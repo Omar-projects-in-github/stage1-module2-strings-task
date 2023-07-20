@@ -1,7 +1,7 @@
 package com.epam.mjc;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class StringSplitter {
 
@@ -13,6 +13,17 @@ public class StringSplitter {
      * @return List of substrings
      */
     public List<String> splitByDelimiters(String source, Collection<String> delimiters) {
-        throw new UnsupportedOperationException("You should implement this method.");
+        StringJoiner joiner = new StringJoiner("|");
+
+        for (String delimiter : delimiters) {
+            joiner.add(delimiter);
+        }
+
+        String regex = joiner.toString();
+
+        String[] substrings = source.split(regex);
+        return Arrays.stream(substrings)
+                .filter(s -> !s.isEmpty()) // Filter out empty substrings
+                .collect(Collectors.toList());
     }
 }
